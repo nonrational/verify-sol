@@ -3,30 +3,46 @@
 <head>
   <title>Message Signing</title>
   <style>
-    * { font-family: Arial, sans-serif; }
+    * { font-family: Arial, sans-serif; margin: 8px;}
     section { margin-bottom: 24px; }
-    input { width: 347px; margin-bottom: 16px; }
+    input, textarea { width: 100%; }
+    textarea { height: 100px; }
+    main { display: flex; flex-direction: column; gap: 16px; justify-content: space-between; max-width: 800px; margin: auto;}
+    #success, #failure { display: none; }
   </style>
 </head>
 <body>
-  <h1>Message Signing v2</h1>
 
-  <section>
-    <form>
-      <label for="original-message">Original Message:</label><br>
-      <textarea id="original-message" name="original-message" rows="4" cols="50" placeholder="Enter your original message here"></textarea><br>
-      <button type="button" onclick="handleSignMessage()">Sign Message</button>
-    </form>
-  </section>
+  <main>
+    <h1>Solana Address Ownership Verification</h1>
+    <section>
+      <form>
+        <label for="original-message">Original Message:</label><br>
+        <textarea id="original-message" name="original-message" placeholder="Enter your original message here"></textarea><br>
+        <button type="button" onclick="handleSignMessage()">Sign Message with Phantom Wallet</button>
+      </form>
+    </section>
 
-  <section>
-    <form>
-      <label for="signature">Signature:</label><br>
-      <textarea id="signature" name="signature" rows="4" cols="50" placeholder="Enter the signature here"></textarea><br/>
-      <input id="address" name="address" placeholder="public-address"/><br/>
-      <button type="button" onclick="handleVerifySignature()">Verify Signature</button>
-    </form>
-  </section>
+    <section>
+      <form>
+        <label for="signature">Signature:</label><br>
+        <textarea id="signature" name="signature" placeholder="Enter the signature here"></textarea><br/>
+        <label for="solanaAddress">Public Address:</label><br>
+        <input id="solanaAddress" name="address" placeholder="public-address"/><br/>
+        <button type="button" onclick="handleVerifySignature()">Verify Signature</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Result</h2>
+      <div id='success'>
+        <p>✅ Signature verified.</p>
+      </div>
+      <div id='failure'>
+        <p>❌ Signature verification failed.</p>
+      </div>
+    </section>
+  </main>
 
   <script>
     function handleSignMessage() {
@@ -35,7 +51,7 @@
         .then((res) => {
           const [hex, pub] = res;
           document.getElementById('signature').value = hex;
-          document.getElementById('address').value = pub;
+          document.getElementById('solanaAddress').value = pub;
         })
         .catch((error) => {
           console.error(error);
@@ -46,10 +62,13 @@
       verifyMessage(
         document.getElementById('original-message').value,
         document.getElementById('signature').value,
-        document.getElementById('address').value
+        document.getElementById('solanaAddress').value
       ).then((res) => {
-        debugger
-        alert(res);
+        if (res) {
+          document.getElementById('success').style.display = 'block';
+        } else {
+          document.getElementById('failure').style.display = 'block';
+        }
       }).catch((error) => {
         console.error(error);
       });
