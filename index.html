@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Message Signing</title>
+  <style>
+    * { font-family: Arial, sans-serif; }
+    section { margin-bottom: 24px; }
+    input { width: 347px; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+  <h1>Message Signing v2</h1>
+
+  <section>
+    <form>
+      <label for="original-message">Original Message:</label><br>
+      <textarea id="original-message" name="original-message" rows="4" cols="50" placeholder="Enter your original message here"></textarea><br>
+      <button type="button" onclick="handleSignMessage()">Sign Message</button>
+    </form>
+  </section>
+
+  <section>
+    <form>
+      <label for="signature">Signature:</label><br>
+      <textarea id="signature" name="signature" rows="4" cols="50" placeholder="Enter the signature here"></textarea><br/>
+      <input id="address" name="address" placeholder="public-address"/><br/>
+      <button type="button" onclick="handleVerifySignature()">Verify Signature</button>
+    </form>
+  </section>
+
+  <script>
+    function handleSignMessage() {
+      console.log('Message signed successfully');
+      signMessage(document.getElementById('original-message').value)
+        .then((res) => {
+          const [hex, pub] = res;
+          document.getElementById('signature').value = hex;
+          document.getElementById('address').value = pub;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+
+    function handleVerifySignature() {
+      verifyMessage(
+        document.getElementById('original-message').value,
+        document.getElementById('signature').value,
+        document.getElementById('address').value
+      ).then((res) => {
+        debugger
+        alert(res);
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+  </script>
+</body>
+</html>
