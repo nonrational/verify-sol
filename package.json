@@ -1,7 +1,7 @@
 {
-  "name": "solana-messages",
+  "name": "verify-sol",
   "version": "0.0.1",
-  "description": "Solana signature verification with Phantom Wallet",
+  "description": "Arbitrary message signing and verification via Phantom Wallet",
   "main": "src/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
