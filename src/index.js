@@ -1,4 +1,3 @@
-import { Keypair } from "@solana/web3.js";
 import nacl from "tweetnacl";
 import { decodeUTF8 } from "tweetnacl-util";
 
@@ -51,7 +50,6 @@ async function verifyMessage(msg, hexSig, pub) {
 
   return verified;
 }
-
 
 window.signMessage = signMessage;
 window.verifyMessage = verifyMessage;
