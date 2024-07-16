@@ -31,7 +31,7 @@ async function signMessage(msg) {
 }
 
 function verifyMessage(msg, hexSig, pub) {
-  if (!(msg || hexSig || pub)) return [null, new Error('Message, signature, and address cannot be empty')];
+  if (!(msg && hexSig && pub)) return [null, new Error('Message, signature, and address cannot be empty')];
 
   const messageBytes = decodeUTF8(msg);
   const sig = hexDecode(hexSig);
