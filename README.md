@@ -1,15 +1,3 @@
-# 🚀 Welcome to your new awesome project!
+# verify-sol
 
-This project has been created using **webpack-cli**, you can now run
-
-```
-npm run build
-```
-
-or
-
-```
-yarn build
-```
-
-to bundle your application
+A tiny webapp to verify ownership of a Solana address via message signature verification.
